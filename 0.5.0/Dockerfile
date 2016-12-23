@@ -14,6 +14,7 @@ ENV GIT=https://github.com/cboursnell/transfuse
 ENV DEST=/software/applications/$APP_NAME/
 
 RUN yum install -y autoconf automake bzip2-devel; \
+    yum clean all ; \
     curl -L -o v1.8.0.tar.gz  https://github.com/torognes/vsearch/archive/v1.8.0.tar.gz ; \
     tar xzf v1.8.0.tar.gz ; \
     cd vsearch-1.8.0 ; \
@@ -28,6 +29,7 @@ RUN yum install -y autoconf automake bzip2-devel; \
     git clone $GIT ; \
     cd $APP_NAME ; \
     git checkout tags/$VERSION ; \
+    rm -rf .git ; \
     gem build *spec ; \
     gem install *gem ; \
     transrate --install-deps read ; \
